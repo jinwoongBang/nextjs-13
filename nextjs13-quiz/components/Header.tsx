@@ -1,10 +1,10 @@
 "use client";
 import Link from "next/link";
 import React, { useState } from "react";
-import { XCircleIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, XCircleIcon } from "@heroicons/react/24/outline";
 
 const Header = () => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   const routes = [
     { title: "Home", path: "/" },
@@ -35,6 +35,29 @@ const Header = () => {
             </Link>
           ))}
         </div>
+      </div>
+
+      <div className="flex justify-between items-center px-6 py-4 bg-orange-600">
+        <div
+          className={`text-slate-50 text-xl sm:text-4xl lg:text-2xl xl:text-4xl font-bold`}
+        >
+          Quiz App
+        </div>
+        <nav className={`space-x-8 hidden lg:flex`}>
+          {routes.map((route) => (
+            <Link
+              className="px-6 py-2 text-slate-100 rounded bg-orange-700"
+              href={route.path}
+              key={route.path}
+            >
+              {route.title}
+            </Link>
+          ))}
+        </nav>
+        <Bars3Icon
+          className={`lg:hidden stroke-indigo-100 w-6 h-6`}
+          onClick={() => setOpen(!open)}
+        />
       </div>
     </header>
   );
