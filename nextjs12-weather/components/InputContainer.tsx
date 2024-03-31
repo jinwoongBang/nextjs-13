@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 type Props = {
   className?: string;
@@ -11,8 +12,31 @@ type Props = {
   onBlurHandler?: () => void;
 };
 
-function InputContainer(props: Props) {
-  return <div>InputContainer</div>;
+function InputContainer({
+  type,
+  value,
+  onChangeHandler,
+  onBlurHandler,
+  placeholder,
+  iconAlt,
+  icoSrc,
+  className,
+}: Props) {
+  return (
+    <div>
+      {icoSrc && <Image width={25} height={25} src={icoSrc} alt={iconAlt} />}
+      <input
+        type={type}
+        value={value}
+        className={`auth__input ${className}`}
+        placeholder={placeholder}
+        onBlur={onBlurHandler}
+        onChange={(e: { target: HTMLInputElement }) =>
+          onChangeHandler(e.target?.value)
+        }
+      />
+    </div>
+  );
 }
 
 export default InputContainer;
