@@ -23,7 +23,7 @@ function InputContainer({
   className,
 }: Props) {
   return (
-    <div>
+    <div className="auth__input-container w-full">
       {icoSrc && <Image width={25} height={25} src={icoSrc} alt={iconAlt} />}
       <input
         type={type}
