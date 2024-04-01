@@ -5,6 +5,8 @@ import InputContainer from "./InputContainer";
 import emailIcon from "@/public/email_envelope_mail_send_icon.svg";
 import lockIcon from "@/public/lock_locker_icon.svg";
 import { User } from "@/model/customTypes";
+import { signIn } from "next-auth/react";
+import { redirect } from "next/dist/server/api-utils";
 
 async function registerUser(userData: User) {
   const response = await fetch("api/auth/signup", {
@@ -65,6 +67,19 @@ function AuthForm() {
         console.error(error);
       }
     } else {
+      const result = await signIn("credentials", {
+        redirect: false,
+        enteredEmail,
+        enteredPassword,
+      });
+
+      if (!result?.error) {
+        router.replace("/weather");
+      }
+
+      if (result?.error) {
+        console.error(result?.error);
+      }
     }
   };
 
