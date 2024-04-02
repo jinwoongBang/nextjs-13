@@ -26,7 +26,7 @@ const handler = async (req: MyApiRequest<User>, res: NextApiResponse) => {
       }
 
       const client = await connectToDatabase();
-      const db = client.db("users");
+      const db = client.db("weather");
       const emailExisting = await db
         .collection("users")
         .findOne({ enteredEmail });
@@ -53,3 +53,5 @@ const handler = async (req: MyApiRequest<User>, res: NextApiResponse) => {
     }
   }
 };
+
+export default handler;

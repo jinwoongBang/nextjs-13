@@ -17,7 +17,7 @@ const authOptions = {
         const { enteredEmail, enteredPassword } = credentials as Credentials;
         const client = await connectToDatabase();
 
-        const db = client.db("users");
+        const db = client.db("weather");
         const usersCollection = db.collection("users");
         const user = await usersCollection.findOne({
           enteredEmail: enteredEmail,
