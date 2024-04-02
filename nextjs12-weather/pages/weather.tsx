@@ -39,8 +39,6 @@ function Weather() {
       }
     };
     getWeatherData();
-
-    getWeatherData();
   }, [city]);
 
   useEffect(() => {
