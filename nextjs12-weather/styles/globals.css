@@ -34,4 +34,17 @@
   .auth__mode {
     @apply mx-auto text-sm;
   }
+
+  .weather__temp {
+    @apply text-4xl;
+  }
+  .weather__bg {
+    @apply absolute right-0 w-full h-full mix-blend-soft-light;
+  }
+  .btn__secondary {
+    @apply p-2 mt-5 mr-auto text-base border rounded-sm text-primary border-primary;
+  }
+  .weather {
+    @apply relative z-10 flex flex-col items-center justify-center w-full text-center;
+  }
 }

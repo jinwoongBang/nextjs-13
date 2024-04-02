@@ -1,5 +1,7 @@
 import Layout from "@/components/Layout";
+import Loading from "@/components/Loading/Loading";
 import SearchBar from "@/components/SearchBar";
+import WeatherResult from "@/components/WeatherResult";
 import { API_KEY, BASE_URL, fetchData } from "@/lib/weather-services";
 import { WeatherData } from "@/model/customTypes";
 import { GetServerSideProps } from "next";
@@ -19,15 +21,24 @@ function Weather() {
 
   useEffect(() => {
     const getWeatherData = async () => {
-      setIsLoading(true);
       if (city.trim().length > 0) {
-        const weather = await fetchData<WeatherData>(
-          `${BASE_URL}weather?q=${city}&limit=6&appid=${API_KEY}&units=metric`
-        );
+        setIsLoading(true);
+        try {
+          //Fetch weather data and update the state
+          const weather: WeatherData = await fetchData(
+            `${BASE_URL}weather?q=${city}&limit=6&appid=${API_KEY}&units=metric`
+          );
 
-        setCurrentWeather(weather);
+          setCurrentWeather(weather);
+        } catch (error) {
+          if (error instanceof Error) {
+            console.error(error.message || "Something went wrong!");
+          }
+        }
+        setIsLoading(false);
       }
     };
+    getWeatherData();
 
     getWeatherData();
   }, [city]);
@@ -54,6 +65,14 @@ function Weather() {
 
   const cardBg = tempIsLow ? "bg-tempLow" : "bg-tempHigh";
 
+  let weatherResultContent = <Loading />;
+  if (!isLoading && !currentWeather) {
+    weatherResultContent = <p className="py-5">Nothing Found!</p>;
+  }
+  if (!isLoading && currentWeather) {
+    weatherResultContent = <WeatherResult weatherData={currentWeather} />;
+  }
+
   return (
     <Layout
       title="Weather App"
@@ -61,6 +80,7 @@ function Weather() {
     >
       <div className="weather">
         <SearchBar />
+        {weatherResultContent}
         <button
           className="btn btn__secondary"
           onClick={logoutHandler}
