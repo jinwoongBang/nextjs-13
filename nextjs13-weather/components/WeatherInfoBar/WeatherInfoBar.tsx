@@ -69,7 +69,11 @@ const WeatherInfoBar = () => {
         선택된 도시: {weather?.data?.city.name}
       </h4>
 
-      <DaySelectButtonRow />
+      <DaySelectButtonRow
+        dayShowing={dayShowing}
+        sixDaysInfo={sixDaysInfo}
+        setDayShowing={setDayShowing}
+      />
       <div
         className={`w-full
       h-full
@@ -78,7 +82,7 @@ const WeatherInfoBar = () => {
         {Array.from(sixDaysInfo.keys()).map((key, index) => {
           const dayInfo = sixDaysInfo.get(key);
           if (dayInfo && index === dayShowing) {
-            return <DayWeatherInfo key={key} />;
+            return <DayWeatherInfo key={key} weatherInfo={dayInfo} />;
           } else {
             return <Fragment key={key}></Fragment>;
           }
