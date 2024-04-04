@@ -5,21 +5,22 @@ import axios from "axios";
 import { WeatherDbData } from "@/models/weatherDbData";
 import CitySearchBarItem from "../CitySearchBarItem/CitySearchBarItem";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
+import { useDebounce } from "@/hooks/useDebounce";
 
 const CitySearchBar = () => {
   const [search, setSearch] = useState("");
-  // const debouncedSearch = useDebounce(search, 1000);
+  const debouncedSearch = useDebounce(search, 1000);
   const [isShowingSearchResults, setIsShowingSearchResults] = useState(false);
 
   const cities = useQuery({
     queryFn: async () => {
-      if (!search) {
+      if (!debouncedSearch) {
         setIsShowingSearchResults(false);
         return [];
       }
       try {
         const fetchedCities = await axios.get<WeatherDbData[]>(
-          `/api/cities/${search}`
+          `/api/cities/${debouncedSearch}`
         );
         if (fetchedCities.status !== 200) {
           console.error(fetchedCities);
@@ -32,14 +33,14 @@ const CitySearchBar = () => {
         console.error(error);
       }
     },
-    queryKey: [search.toLowerCase()],
+    queryKey: [debouncedSearch.toLowerCase()],
     refetchOnMount: true,
     refetchOnWindowFocus: false,
   });
 
   useEffect(() => {
     cities.refetch();
-  }, [search]);
+  }, [debouncedSearch]);
 
   return (
     <div className="searchBar">
