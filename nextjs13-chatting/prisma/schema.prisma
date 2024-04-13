@@ -56,6 +56,8 @@ model User {
   sessions       Session[]
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
+
+  userType UserType @default(User)
 }
 
 model VerificationToken {

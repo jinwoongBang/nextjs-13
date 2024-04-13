@@ -29,7 +29,12 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials, req) {
         // Add logic here to look up the user from the credentials supplied
-        const user = { id: "1", name: "J Smith", email: "jsmith@example.com" };
+        const user = {
+          id: "1",
+          name: "J Smith",
+          email: "jsmith@example.com",
+          role: "Admin",
+        };
 
         if (user) {
           // Any object returned will be saved in `user` property of the JWT
@@ -46,7 +51,10 @@ export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
-
+  jwt: {
+    // secret: "secret", // NEXTAUTH_SECRET 환경 변수로 설정 가능
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+  },
   callbacks: {
     async jwt({ token, user }) {
       console.log("token", token);
