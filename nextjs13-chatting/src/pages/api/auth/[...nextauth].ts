@@ -33,7 +33,8 @@ export const authOptions: NextAuthOptions = {
           id: "1",
           name: "J Smith",
           email: "jsmith@example.com",
-          role: "Admin",
+          // role: "Admin",
+          role: "User",
         };
 
         if (user) {
@@ -54,6 +55,9 @@ export const authOptions: NextAuthOptions = {
   jwt: {
     // secret: "secret", // NEXTAUTH_SECRET 환경 변수로 설정 가능
     maxAge: 30 * 24 * 60 * 60, // 30 days
+  },
+  pages: {
+    signIn: "/auth/login",
   },
   callbacks: {
     async jwt({ token, user }) {
