@@ -26,7 +26,12 @@ export default async function getCurrentUser() {
     }
 
     // console.log('currentUser', currentUser);
-    return currentUser;
+    return {
+      ...currentUser,
+      // 이전 Nextjs 13.3 이하 버전에서는 Node Data 객체를 문자열로 전달해줘야 함.
+      //   createdAt: currentUser.createdAt.toISOString(),
+      //   updatedAt: currentUser.updatedAt.toISOString(),
+    };
   } catch (error) {
     return null;
   }
