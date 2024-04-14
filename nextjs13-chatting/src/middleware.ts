@@ -5,7 +5,7 @@ export { default } from "next-auth/middleware";
 
 export async function middleware(req: NextRequest) {
   const session = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
-  console.log("session", session);
+  // console.log("session", session);
   const pathname = req.nextUrl.pathname;
 
   // 로그인된 유저만 접근 가능
