@@ -63,7 +63,7 @@ const RegisterPage = () => {
           <p className="text-gray-400">
             Not a member?{" "}
             <Link href="/auth/register" className="text-black hover:underline">
-              Login
+              Register
             </Link>
           </p>
         </div>
