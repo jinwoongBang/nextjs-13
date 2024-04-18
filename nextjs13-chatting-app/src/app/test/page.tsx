@@ -1,7 +1,7 @@
 import LoadingModal from "@/components/modals/LoadingModal";
 import React from "react";
 
-const Loading = () => {
+const TestPage = () => {
   return (
     <div>
       <LoadingModal />
@@ -9,4 +9,4 @@ const Loading = () => {
   );
 };
 
-export default Loading;
+export default TestPage;
