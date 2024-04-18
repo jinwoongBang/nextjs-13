@@ -1,9 +1,9 @@
 "use client";
 
-import { User } from "next-auth";
 import Image from "next/image";
 
 import useActiveList from "../hooks/useActiveList";
+import { User } from "@prisma/client";
 
 interface AvatarProps {
   user?: User;

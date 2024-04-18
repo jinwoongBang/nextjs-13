@@ -1,15 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { User } from "next-auth";
 
 import useRoutes from "@/hooks/useRoutes";
 
 import DesktopItem from "./DesktopItem";
 import Avatar from "../Avatar";
+import { User } from "@prisma/client";
 
 interface DesktopSidebarProps {
-  currentUser: User;
+  currentUser?: User | null;
 }
 
 const DesktopSidebar: React.FC<DesktopSidebarProps> = ({ currentUser }) => {
