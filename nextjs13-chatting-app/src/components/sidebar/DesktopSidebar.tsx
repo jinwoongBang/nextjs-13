@@ -9,7 +9,7 @@ import Avatar from "../Avatar";
 import { User } from "@prisma/client";
 
 interface DesktopSidebarProps {
-  currentUser?: User | null;
+  currentUser?: User;
 }
 
 const DesktopSidebar: React.FC<DesktopSidebarProps> = ({ currentUser }) => {
