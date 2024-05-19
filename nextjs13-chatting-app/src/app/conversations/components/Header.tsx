@@ -20,7 +20,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ conversation }) => {
   const otherUser = useOtherUser(conversation);
-  // const [drawerOpen, setDrawerOpen] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   const { members } = useActiveList();
   const isActive = members.indexOf(otherUser?.email!) !== -1;
@@ -32,7 +32,50 @@ const Header: React.FC<HeaderProps> = ({ conversation }) => {
     return isActive ? "Active" : "Offline";
   }, [conversation, isActive]);
 
-  return <></>;
+  return (
+    <>
+      <div
+        className="
+        bg-white 
+        w-full 
+        flex 
+        border-b-[1px] 
+        sm:px-4 
+        py-3 
+        px-4 
+        lg:px-6 
+        justify-between 
+        items-center 
+        shadow-sm
+      "
+      >
+        <div className="flex items-center gap-3">
+          <Link
+            href="/conversations"
+            className="block text-orange-500 transition cursor-pointer lg:hidden hover:text-orange-600"
+          >
+            <HiChevronLeft size={32} />
+          </Link>
+          {conversation.isGroup ? (
+            <AvatarGroup users={conversation.users} />
+          ) : (
+            <Avatar user={otherUser} />
+          )}
+          <div className="flex flex-col">
+            <div>{conversation.name || otherUser.name}</div>
+            <div className="text-sm font-light text-neutral-500">
+              {statusText}
+            </div>
+          </div>
+        </div>
+        <HiEllipsisHorizontal
+          size={32}
+          onClick={() => setDrawerOpen(true)}
+          className="text-orange-500 transition cursor-pointer hover:text-orange-600"
+        />
+      </div>
+    </>
+  );
 };
 
 export default Header;
