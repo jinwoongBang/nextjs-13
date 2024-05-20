@@ -11,6 +11,7 @@ import { find, uniq } from "lodash";
 import useConversation from "@/hooks/useConversation";
 import ConversationBox from "./ConversationBox";
 import { FullConversationType } from "@/types";
+import { pusherClient } from "@/libs/pusher";
 
 interface ConversationListProps {
   initialItems: FullConversationType[];
@@ -27,7 +28,42 @@ const ConversationList: React.FC<ConversationListProps> = ({
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const router = useRouter();
   const session = useSession();
+
+  const pusherKey = useMemo(() => {
+    return session.data?.user?.email;
+  }, [session.data?.user?.email]);
+
+  useEffect(() => {
+    if (!pusherKey) {
+      return;
+    }
+
+    pusherClient.subscribe(pusherKey);
+
+    const updateHandler = (conversation: FullConversationType) => {
+      setItems((current) =>
+        current.map((currentConversation) => {
+          if (currentConversation.id === conversation.id) {
+            return {
+              ...currentConversation,
+              messages: conversation.messages,
+            };
+          }
+
+          return currentConversation;
+        })
+      );
+    };
+
+    pusherClient.bind("conversation:update", updateHandler);
+
+    return () => {
+      pusherClient.unsubscribe(pusherKey);
+      pusherClient.unbind("conversation:update", updateHandler);
+    };
+  }, [pusherKey, router]);
 
   return (
     <>
